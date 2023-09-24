@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+
+class GFG {
+    public static void main(String args[]) throws IOException {
+        BufferedReader read =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while (t-- > 0) {
+            long N = Long.parseLong(read.readLine());
+
+            PerfectNumbers ob = new PerfectNumbers();
+            System.out.println(ob.isPerfectNumber(N));
+        }
+    }
+}
+public class PerfectNumbers {
+    static int isPerfectNumber(long n) {
+        
+        if(n == 1) return 0;
+        
+        long sum = 1;
+        
+        for(long i = 2; i*i<=n;i++){
+            
+            if(n%i == 0) sum = sum + i +n/i;
+        }
+        
+        if(sum == n) return 1;
+        
+        return 0;
+        
+    }
+};
