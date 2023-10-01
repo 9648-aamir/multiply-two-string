@@ -1,47 +1,85 @@
-public class Main {
-    public static int search(int[] nums, int target) {
-        int left = 0;
-        int right = nums.length - 1;
+class TreeNode {
+    int data;
+    TreeNode left;
+    TreeNode right;
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
+    public TreeNode(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
 
-            if (nums[mid] == target) {
-                return mid;
-            }
+class BinarySearchTree {
+    private TreeNode root;
 
-            // Check if the left half is sorted
-            if (nums[left] <= nums[mid]) {
-                // Check if the target is in the left half
-                if (nums[left] <= target && target < nums[mid]) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            }
-            // If the left half is not sorted, then the right half must be sorted
-            else {
-                // Check if the target is in the right half
-                if (nums[mid] < target && target <= nums[right]) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
-                }
-            }
-        }
-
-        return -1; // Element not found
+    public BinarySearchTree() {
+        root = null;
     }
 
-    public static void main(String[] args) {
-        int[] nums = {4, 5, 6, 7, 0, 1, 2};
-        int target = 5;
-        int index = search(nums, target);
+    // Insert a value into the BST
+    public void insert(int value) {
+        root = insertRec(root, value);
+    }
 
-        if (index != -1) {
-            System.out.println("Element " + target + " found at index " + index);
+    // Helper method to recursively insert a value into the BST
+    private TreeNode insertRec(TreeNode root, int value) {
+        if (root == null) {
+            root = new TreeNode(value);
+            return root;
+        }
+
+        if (value < root.data) {
+            root.left = insertRec(root.left, value);
+        } else if (value > root.data) {
+            root.right = insertRec(root.right, value);
+        }
+
+        return root;
+    }
+
+    // Search for a value in the BST
+    public boolean search(int value) {
+        return searchRec(root, value);
+    }
+
+    // Helper method to recursively search for a value in the BST
+    private boolean searchRec(TreeNode root, int value) {
+        if (root == null) {
+            return false; // Element not found
+        }
+
+        if (root.data == value) {
+            return true; // Element found
+        }
+
+        if (value < root.data) {
+            return searchRec(root.left, value);
         } else {
-            System.out.println("Element " + target + " not found in the array.");
+            return searchRec(root.right, value);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+
+        // Insert elements into the BST
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(70);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(60);
+        bst.insert(80);
+
+        // Search for elements in the BST
+        int targetElement = 40;
+        if (bst.search(targetElement)) {
+            System.out.println("Element " + targetElement + " found in the BST.");
+        } else {
+            System.out.println("Element " + targetElement + " not found in the BST.");
         }
     }
 }
