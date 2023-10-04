@@ -1,33 +1,42 @@
-public class Main{
-    public static int  jmpSearch(int arr[], int target){
-        int n = arr.length;
-        int step=(int)Math.floor(Math.sqrt(n));
+public class Main {
+    public static int interpolationSearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
 
-        int prev=0;
+        while (low <= high && target >= arr[low] && target <= arr[high]) {
+            if (low == high) {
+                if (arr[low] == target) {
+                    return low;
+                }
+                return -1; // Target not found
+            }
 
-        while(arr[Math.min(step, n)-1]<target){
-            prev=step;
-            step+=(int )Math.floor(Math.sqrt(n));
-            if(prev>=n){
-                return -1;
+            // Calculate the estimated position using interpolation formula
+            int pos = low + ((target - arr[low]) * (high - low)) / (arr[high] - arr[low]);
+
+            if (arr[pos] == target) {
+                return pos;
+            }
+
+            if (arr[pos] < target) {
+                low = pos + 1;
+            } else {
+                high = pos - 1;
             }
         }
-        for(int i=prev;i<Math.min(step, n);i++){
-            if(arr[i]==target){
-                return i;
-            }
-        }
-        return -1;
+
+        return -1; // Target not found
     }
-    public static void main(String[] args) {
-        int arr[]={1,2,3,4,5,6,7,8,9};
-        int target = 10;
 
-        int result = jmpSearch(arr, target);
-        if(result!=1){
-            System.out.println("Element at the index:"+result);
-        }else{
-            System.out.println("not found");
+    public static void main(String[] args) {
+        int[] sortedArray = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21};
+        int targetElement = 13;
+        int result = interpolationSearch(sortedArray, targetElement);
+
+        if (result != -1) {
+            System.out.println("Element " + targetElement + " found at index " + result);
+        } else {
+            System.out.println("Element " + targetElement + " not found in the array");
         }
     }
 }
