@@ -5,7 +5,7 @@ public class DesignHashMap {
     private static final int SIZE = 1000;
     private List<int[]>[] map;
 
-    public MyHashMap() {
+    public DesignHashMap () {
         map = new ArrayList[SIZE];
         for (int i = 0; i < SIZE; i++) {
             map[i] = new ArrayList<>();
