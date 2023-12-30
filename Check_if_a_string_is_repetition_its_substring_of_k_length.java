@@ -1,7 +1,7 @@
 public class Check_if_a_string_is_repetition_its_substring_of_k_length {
     int kSubstrConcat(int n, String s, int k)
     {
-        // Your Code Here   
+        // Your Code Here
         if(n%k!=0) return 0;
         String ss=s.substring(0,k);
         int cnt=n/k;
